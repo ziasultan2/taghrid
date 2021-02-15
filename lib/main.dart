@@ -16,10 +16,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Taghrid',
-      // theme: ThemeData(
-      //   primarySwatch: Colors.green,
-      //   visualDensity: VisualDensity.adaptivePlatformDensity,
-      // ),
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       debugShowCheckedModeBanner: false,
       home: MyHomePage(title: 'Taghrid'),
     );
