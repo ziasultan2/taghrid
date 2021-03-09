@@ -9,12 +9,21 @@ class NameUI extends StatelessWidget {
         title: Text('Names of Allah'),
       ),
       body: Container(
+        margin: EdgeInsets.all(20),
         child: ListView.builder(
             itemCount: namesOfAllah.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(namesOfAllah[index].arabic),
-                subtitle: Text(namesOfAllah[index].translation),
+              return Container(
+                margin: EdgeInsets.all(10),
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [
+                    Text(namesOfAllah[index].arabic),
+                    Text(namesOfAllah[index].transliteration),
+                    Text(namesOfAllah[index].translation)
+                  ],
+                ),
               );
             }),
       ),
@@ -200,7 +209,7 @@ const List<Name> namesOfAllah = const <Name>[
       translation: 'The Most Appreciative'),
   const Name(
       id: 36,
-      arabic: 'ٱلْسَّلَامُ',
+      arabic: 'ٱلْعَلِيُّ',
       transliteration: 'AL-‘ALEE',
       translation: 'The Most High, The Exalted'),
   const Name(
@@ -235,7 +244,7 @@ const List<Name> namesOfAllah = const <Name>[
       translation: 'The Most Generous, The Most Esteemed'),
   const Name(
       id: 43,
-      arabic: 'ٱلْبَارِئُ',
+      arabic: 'ٱلْرَّقِيبُ',
       transliteration: 'AR-RAQEEB',
       translation: 'The Watchful'),
   const Name(
@@ -380,7 +389,7 @@ const List<Name> namesOfAllah = const <Name>[
       translation: 'The Expediter, The Promoter'),
   const Name(
       id: 72,
-      arabic: 'ٱلْحَىُّ',
+      arabic: 'ٱلْمُؤَخِّرُ',
       transliteration: 'AL-MU’AKHKHIR',
       translation: 'The Delayer, the Retarder'),
   const Name(
