@@ -1,11 +1,10 @@
 import 'package:app/model/choice.dart';
+import 'package:app/view/athkar.dart';
 import 'package:app/view/dua/duaUI.dart';
 import 'package:app/view/hadith/hadithUI.dart';
 import 'package:app/view/kalma/juzz.dart';
-import 'package:app/view/kalma/kalmaUI.dart';
 import 'package:app/view/names/nameUI.dart';
 import 'package:app/view/prayer_time/timeUI.dart';
-import 'package:app/view/qibla/qiblahUI.dart';
 import 'package:app/view/quran/LanguageUI.dart';
 import 'package:app/view/quran/SurahListUI.dart';
 import 'package:app/view/tasbih/tasbihUI.dart';
@@ -31,13 +30,13 @@ class FeatureWidget extends StatelessWidget {
             Get.to(HadithUI());
             break;
           case HomeType.qibla:
-            // Get.to(QiblahCompass());
+            Get.to(Adhkar());
             break;
           case HomeType.prayerTime:
             Get.to(PrayerTimeUI());
             break;
-          case HomeType.kalima:
-            Get.to(Juzz());
+          case HomeType.khatma:
+            Get.to(Quran());
             break;
           case HomeType.dua:
             Get.to(DuaUI());

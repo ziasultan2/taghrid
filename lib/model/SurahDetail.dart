@@ -1,14 +1,19 @@
-class QuranPageModel {
+class SurahDetail {
   int code;
   String status;
-  Data data;
+  List<Data> data;
 
-  QuranPageModel({this.code, this.status, this.data});
+  SurahDetail({this.code, this.status, this.data});
 
-  QuranPageModel.fromJson(Map<String, dynamic> json) {
+  SurahDetail.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     status = json['status'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    if (json['data'] != null) {
+      data = new List<Data>();
+      json['data'].forEach((v) {
+        data.add(new Data.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -16,7 +21,7 @@ class QuranPageModel {
     data['code'] = this.code;
     data['status'] = this.status;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -24,47 +29,10 @@ class QuranPageModel {
 
 class Data {
   int number;
-  List<Ayahs> ayahs;
-  Surahs surahs;
-  Edition edition;
-
-  Data({this.number, this.ayahs, this.surahs, this.edition});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    number = json['number'];
-    if (json['ayahs'] != null) {
-      ayahs = new List<Ayahs>();
-      json['ayahs'].forEach((v) {
-        ayahs.add(new Ayahs.fromJson(v));
-      });
-    }
-    surahs =
-        json['surahs'] != null ? new Surahs.fromJson(json['surahs']) : null;
-    edition =
-        json['edition'] != null ? new Edition.fromJson(json['edition']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['number'] = this.number;
-    if (this.ayahs != null) {
-      data['ayahs'] = this.ayahs.map((v) => v.toJson()).toList();
-    }
-    if (this.surahs != null) {
-      data['surahs'] = this.surahs.toJson();
-    }
-    if (this.edition != null) {
-      data['edition'] = this.edition.toJson();
-    }
-    return data;
-  }
-}
-
-class Ayahs {
-  int number;
   String audio;
   List<String> audioSecondary;
   String text;
+  Edition edition;
   Surah surah;
   int numberInSurah;
   int juz;
@@ -74,11 +42,12 @@ class Ayahs {
   int hizbQuarter;
   bool sajda;
 
-  Ayahs(
+  Data(
       {this.number,
       this.audio,
       this.audioSecondary,
       this.text,
+      this.edition,
       this.surah,
       this.numberInSurah,
       this.juz,
@@ -88,11 +57,13 @@ class Ayahs {
       this.hizbQuarter,
       this.sajda});
 
-  Ayahs.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     number = json['number'];
     audio = json['audio'];
     audioSecondary = json['audioSecondary'].cast<String>();
     text = json['text'];
+    edition =
+        json['edition'] != null ? new Edition.fromJson(json['edition']) : null;
     surah = json['surah'] != null ? new Surah.fromJson(json['surah']) : null;
     numberInSurah = json['numberInSurah'];
     juz = json['juz'];
@@ -109,6 +80,9 @@ class Ayahs {
     data['audio'] = this.audio;
     data['audioSecondary'] = this.audioSecondary;
     data['text'] = this.text;
+    if (this.edition != null) {
+      data['edition'] = this.edition.toJson();
+    }
     if (this.surah != null) {
       data['surah'] = this.surah.toJson();
     }
@@ -123,61 +97,6 @@ class Ayahs {
   }
 }
 
-class Surah {
-  int number;
-  String name;
-  String englishName;
-  String englishNameTranslation;
-  String revelationType;
-  int numberOfAyahs;
-
-  Surah(
-      {this.number,
-      this.name,
-      this.englishName,
-      this.englishNameTranslation,
-      this.revelationType,
-      this.numberOfAyahs});
-
-  Surah.fromJson(Map<String, dynamic> json) {
-    number = json['number'];
-    name = json['name'];
-    englishName = json['englishName'];
-    englishNameTranslation = json['englishNameTranslation'];
-    revelationType = json['revelationType'];
-    numberOfAyahs = json['numberOfAyahs'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['number'] = this.number;
-    data['name'] = this.name;
-    data['englishName'] = this.englishName;
-    data['englishNameTranslation'] = this.englishNameTranslation;
-    data['revelationType'] = this.revelationType;
-    data['numberOfAyahs'] = this.numberOfAyahs;
-    return data;
-  }
-}
-
-class Surahs {
-  Surah s1;
-
-  Surahs({this.s1});
-
-  Surahs.fromJson(Map<String, dynamic> json) {
-    s1 = json['1'] != null ? new Surah.fromJson(json['1']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.s1 != null) {
-      data['1'] = this.s1.toJson();
-    }
-    return data;
-  }
-}
-
 class Edition {
   String identifier;
   String language;
@@ -185,7 +104,7 @@ class Edition {
   String englishName;
   String format;
   String type;
-  Null direction;
+  String direction;
 
   Edition(
       {this.identifier,
@@ -215,6 +134,43 @@ class Edition {
     data['format'] = this.format;
     data['type'] = this.type;
     data['direction'] = this.direction;
+    return data;
+  }
+}
+
+class Surah {
+  int number;
+  String name;
+  String englishName;
+  String englishNameTranslation;
+  int numberOfAyahs;
+  String revelationType;
+
+  Surah(
+      {this.number,
+      this.name,
+      this.englishName,
+      this.englishNameTranslation,
+      this.numberOfAyahs,
+      this.revelationType});
+
+  Surah.fromJson(Map<String, dynamic> json) {
+    number = json['number'];
+    name = json['name'];
+    englishName = json['englishName'];
+    englishNameTranslation = json['englishNameTranslation'];
+    numberOfAyahs = json['numberOfAyahs'];
+    revelationType = json['revelationType'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['number'] = this.number;
+    data['name'] = this.name;
+    data['englishName'] = this.englishName;
+    data['englishNameTranslation'] = this.englishNameTranslation;
+    data['numberOfAyahs'] = this.numberOfAyahs;
+    data['revelationType'] = this.revelationType;
     return data;
   }
 }

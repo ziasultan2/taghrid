@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,6 +35,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _requireConsent = true;
+
+  @override
+  void initState() {
+    super.initState();
+    // initPlatformState();
+  }
+
+// Platform messages are asynchronous, so we initialize in an async method.
+//   Future<void> initPlatformState() async {
+//     OneSignal.shared.init("dbb59048-db3e-4ec9-99b3-108ea14853ff", iOSSettings: {
+//       OSiOSSettings.autoPrompt: false,
+//       OSiOSSettings.inAppLaunchUrl: false
+//     });
+//     OneSignal.shared
+//         .setInFocusDisplayType(OSNotificationDisplayType.notification);
+
+// // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+//     await OneSignal.shared
+//         .promptUserForPushNotificationPermission(fallbackToSettings: true);
+
+//     OneSignal.shared
+//         .setNotificationReceivedHandler((OSNotification notification) {
+//       print('received');
+//     });
+//   }
+
   final controller = Get.put(QuranController());
   HijriCalendar _today = new HijriCalendar.now();
 

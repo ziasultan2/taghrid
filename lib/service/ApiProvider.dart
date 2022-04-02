@@ -10,7 +10,7 @@ class ApiProvider {
   Future<dynamic> get(String url) async {
     var responseJson;
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse(url));
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -22,7 +22,7 @@ class ApiProvider {
     var responseJson;
     try {
       final response = await http.post(
-        url,
+        Uri.parse(url),
         body: dynamic,
       );
       responseJson = _response(response);
@@ -36,7 +36,7 @@ class ApiProvider {
     var responseJson;
     try {
       final response = await http.patch(
-        url + '/' + id,
+        Uri.parse(url + '/' + id.toString()),
         body: dynamic,
       );
       responseJson = _response(response);
@@ -49,7 +49,7 @@ class ApiProvider {
   Future<dynamic> delete(String url, id) async {
     var responseJson;
     try {
-      final response = await http.delete(url + '/' + id),
+      final response = await http.delete(Uri.parse(url + '/' + id.toString())),
           responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -60,7 +60,7 @@ class ApiProvider {
   Future<dynamic> show(String url, id) async {
     var responseJson;
     try {
-      final response = await http.get(url + '/' + '$id');
+      final response = await http.get(Uri.parse(url + '/' + '$id'));
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');

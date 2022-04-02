@@ -1,33 +1,45 @@
+import 'package:app/model/AyahDetail.dart';
 import 'package:app/model/JuzzModel.dart';
 import 'package:app/model/QuranModel.dart';
 import 'package:app/model/SearchModel.dart';
+import 'package:app/model/SurahDetail.dart';
 import 'package:app/model/SurahModel.dart';
 import 'package:app/service/ApiProvider.dart';
 import 'package:app/utils/network.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dio/dio.dart';
 
 class QuranController extends GetxController {
   ApiProvider api = ApiProvider();
   final quran = QuranModel().obs;
   final sura = SurahModel().obs;
   final search = SearchModel().obs;
-  final juzz = JuzzModel().obs;
+  final page = QuranPageModel().obs;
+  var identifier;
+  final pageNumber = 1.obs;
+  final ayahDetail = AyahDetail().obs;
 
   QuranController() {
     index();
   }
 
-  index() {
-    api.get(Network.quran).then((x) async {
-      var data = QuranModel.fromJson(x);
-      quran.value = data;
-    });
+  index() async {
+    var dio = Dio();
+    var x = await dio.get(Network.quran);
+    var data = QuranModel.fromJson(x.data);
+    quran.value = data;
+    getIdentifier();
+  }
+
+  getIdentifier() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    identifier = preferences.getString('identifier');
+    pageNumber.value = preferences.getInt('page') ?? 1;
   }
 
   surah(id) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    var identifier = preferences.getString('identifier');
+    print('surah id is $id');
     String path = Network.base +
         'surah/' +
         id.toString() +
@@ -47,14 +59,41 @@ class QuranController extends GetxController {
     });
   }
 
-  getJuzz(id) {
+  previous() {
+    getJuzz(pageNumber.value - 1);
+  }
+
+  next() {
+    getJuzz(pageNumber.value + 1);
+  }
+
+  getJuzz(id) async {
     api
-        .get('http://api.alquran.cloud/v1/juz/' +
+        .get('http://api.alquran.cloud/v1/page/' +
             id.toString() +
-            '/ar.saoodshuraym')
+            '/ar.abdurrahmaansudais')
         .then((r) async {
       print(r);
-      juzz.value = JuzzModel.fromJson(r);
+      page.value = QuranPageModel.fromJson(r);
+    });
+    setPage(id);
+  }
+
+  setPage(id) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setInt('page', id);
+    pageNumber.value = id;
+  }
+
+  getDetail(id) {
+    api
+        .get('http://api.alquran.cloud/v1/ayah/' +
+            id.toString() +
+            '/editions/ar.abdurrahmaansudais,en.asad,' +
+            identifier)
+        .then((r) {
+      print(r);
+      ayahDetail.value = AyahDetail.fromJson(r);
     });
   }
 }
