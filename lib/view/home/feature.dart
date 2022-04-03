@@ -26,8 +26,8 @@ class FeatureWidget extends StatelessWidget {
           case HomeType.quran:
             check();
             break;
-          case HomeType.hadith:
-            Get.to(HadithUI());
+          case HomeType.names:
+            Get.to(NameUI());
             break;
           case HomeType.qibla:
             Get.to(Adhkar());
@@ -35,11 +35,14 @@ class FeatureWidget extends StatelessWidget {
           case HomeType.prayerTime:
             Get.to(PrayerTimeUI());
             break;
-          case HomeType.khatma:
-            Get.to(Quran());
+          case HomeType.tasbih:
+            Get.to(TasbihUI());
             break;
           case HomeType.dua:
             Get.to(DuaUI());
+            break;
+          case HomeType.khatma:
+            Get.to(Quran());
             break;
           case HomeType.tasbih:
             Get.to(TasbihUI());

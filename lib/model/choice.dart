@@ -7,12 +7,12 @@ class Choice {
 
 class HomeType {
   static const quran = 0;
-  static const hadith = 1;
+  static const names = 1;
   static const qibla = 2;
   static const prayerTime = 3;
-  static const khatma = 4;
+  static const tasbih = 4;
   static const dua = 5;
-  static const tasbih = 6;
+  static const khatma = 6;
   static const calender = 7;
   static const name = 8;
 }
@@ -28,15 +28,16 @@ class QuranType {
 
 const List<Choice> home = const <Choice>[
   const Choice(title: 'Smart Quran ', icon: 'quran.png', type: HomeType.quran),
-  const Choice(title: 'Hadith', icon: 'hadith.png', type: HomeType.hadith),
+  const Choice(title: '99 names', icon: 'name.png', type: HomeType.names),
   const Choice(title: 'Adhkar', icon: 'adhkar.png', type: HomeType.qibla),
   const Choice(
       title: 'Prayer Time', icon: 'time.jpeg', type: HomeType.prayerTime),
-  const Choice(
-      title: 'Classic Quran', icon: 'kalma.png', type: HomeType.khatma),
+  const Choice(title: 'Tasbih', icon: 'tasbih.jpg', type: HomeType.tasbih),
   const Choice(title: 'Daily Dua', icon: 'dua.png', type: HomeType.dua),
   const Choice(title: 'Names of Allah', icon: 'name.png', type: HomeType.name),
   const Choice(title: 'Tasbih', icon: 'tasbih.jpg', type: HomeType.tasbih),
+  const Choice(
+      title: 'Classic Quran', icon: 'kalma.png', type: HomeType.khatma),
   // const Choice(
   //     title: 'Calendar', icon: 'calendar.png', type: HomeType.calender),
 ];
