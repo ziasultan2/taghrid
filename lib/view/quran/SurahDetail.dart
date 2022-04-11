@@ -14,7 +14,9 @@ class SurahDetail extends StatelessWidget {
   final GlobalKey<PopupMenuButtonState<int>> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    controller.surah(id);
+    controller.getIdentifier().then((value) {
+      controller.surah(id);
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text(name),

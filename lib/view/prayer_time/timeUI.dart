@@ -1,6 +1,7 @@
 import 'package:app/controller/PrayerController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PrayerTimeUI extends StatelessWidget {
   final PrayerController controller = Get.put(PrayerController());
@@ -30,49 +31,56 @@ class PrayerTimeUI extends StatelessWidget {
                     ),
                     ListTile(
                       tileColor: Colors.grey[300],
-                      title: Text('Imsak'),
-                      trailing: Text('${controller.prayers.value['Imsak']}'),
-                    ),
-                    ListTile(
-                      tileColor: Colors.white,
-                      title: Text('Sunrise'),
-                      trailing: Text('${controller.prayers.value['Sunrise']}'),
-                    ),
-                    ListTile(
-                      tileColor: Colors.grey[300],
                       title: Text('Fajr'),
-                      trailing: Text('${controller.prayers.value['Fajr']}'),
+                      trailing: Text(
+                          '${controller.prayers.value['Fajr'].toString().replaceAll(new RegExp('%'), '')}'),
                     ),
                     ListTile(
                       tileColor: Colors.white,
                       title: Text('Dhuhr'),
-                      trailing: Text('${controller.prayers.value['Dhuhr']}'),
+                      trailing: Text(
+                          '${controller.prayers.value['Dhuhr'].toString().replaceAll(new RegExp('%'), '')}'),
                     ),
                     ListTile(
                       tileColor: Colors.grey[300],
                       title: Text('Asr'),
-                      trailing: Text('${controller.prayers.value['Asr']}'),
+                      trailing: Text(
+                          '${controller.prayers.value['Asr'].toString().replaceAll(new RegExp('%'), '')}'),
                     ),
                     ListTile(
                       tileColor: Colors.white,
-                      title: Text('Sunset'),
-                      trailing: Text('${controller.prayers.value['Sunset']}'),
-                    ),
-                    ListTile(
-                      tileColor: Colors.grey[300],
                       title: Text('Maghrib'),
-                      trailing: Text('${controller.prayers.value['Maghrib']}'),
-                    ),
-                    ListTile(
-                      tileColor: Colors.white,
-                      title: Text('Isha'),
-                      trailing: Text('${controller.prayers.value['Isha']}'),
+                      trailing: Text(
+                          '${controller.prayers.value['Maghrib'].toString().replaceAll(new RegExp('%'), '')}'),
                     ),
                     ListTile(
                       tileColor: Colors.grey[300],
-                      title: Text('Midnight'),
-                      trailing: Text('${controller.prayers.value['Midnight']}'),
+                      title: Text('Isha'),
+                      trailing: Text(
+                          '${controller.prayers.value['Isha'].toString().replaceAll(new RegExp('%'), '')}'),
                     ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        if (!await launch(
+                            'https://qiblafinder.withgoogle.com/'))
+                          throw 'Could not launch';
+                      },
+                      child: Center(
+                        child: Container(
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.green.withOpacity(0.7)),
+                          child: Text(
+                            'SHOW QIBLA',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 )
               : Container(),

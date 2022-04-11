@@ -2,6 +2,7 @@ import 'package:app/controller/QuranController.dart';
 import 'package:app/model/choice.dart';
 import 'package:app/view/home/feature.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
@@ -68,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String formatter = DateFormat('dd MMM y').format(DateTime.now());
   @override
   Widget build(BuildContext context) {
+    Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.lowest);
     final orientation = MediaQuery.of(context).orientation;
     return Scaffold(
         body: Container(

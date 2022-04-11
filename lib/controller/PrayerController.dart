@@ -1,4 +1,5 @@
 import 'package:app/service/ApiProvider.dart';
+import 'package:dart_ipify/dart_ipify.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,15 +10,15 @@ class PrayerController extends GetxController {
   final prayers = {}.obs;
 
   index() async {
-    var location = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    print('location is $location');
+    final ipv4 = await Ipify.ipv4();
     api
         .get(
-            'https://api.pray.zone/v2/times/today.json?longitude=90.4263177&latitude=23.7728428&elevation=333')
-        .then((result) async {
-      print(result['results']['datetime'][0]['times']);
-      prayers.value = result['results']['datetime'][0]['times'];
+            "https://www.islamicfinder.us/index.php/api/prayer_times?timezone=&user_ip=" +
+                ipv4)
+        .then((result) {
+      print(result);
+      print(result['results']);
+      prayers.value = result['results'];
       print(prayers.value['Maghrib']);
     });
   }

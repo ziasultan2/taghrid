@@ -86,8 +86,8 @@ class ApiProvider {
         throw UnauthorisedException(response.body.toString());
         break;
       case 500:
-        CustomWidgets.showErrorSnachbar(
-            "SERVER ERROR", "PLEASE TRY AGAIN LATER");
+        CustomWidgets.showErrorSnachbar("SERVER ERROR",
+            "PLEASE TRY AGAIN LATER" + response.body.toString());
         break;
       case 422:
         var responseJson = json.decode(response.body);

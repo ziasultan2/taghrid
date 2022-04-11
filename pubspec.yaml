@@ -39,6 +39,8 @@ dependencies:
   onesignal_flutter: ^2.6.3
   google_maps_flutter:
   geolocator:
+  url_launcher:
+  dart_ipify: ^1.1.1
 
 dev_dependencies:
   flutter_test:
